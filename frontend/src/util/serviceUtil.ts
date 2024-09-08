@@ -10,18 +10,18 @@ export const loginUser = async (username: string, password: string): Promise<voi
     await webService.loginUser(username, password);
 };
 
-export const fetchTodos = async (): Promise<Todo[]> => {
-    return await webService.getTodos();
+export const loadTodos = async (): Promise<Todo[]> => {
+    return await webService.loadTodos();
 };
 
-export const addTodo = async (task: string): Promise<Todo> => {
+export const createTodo = async (task: string): Promise<Todo> => {
     return await webService.createTodo(task);
 };
 
-export const modifyTodo = async (id: string, task: string, completed: boolean): Promise<Todo> => {
-    return await webService.updateTodo(id, task, completed);
+export const editTodo = async (id: string, task: string, completed: boolean): Promise<Todo> => {
+    return await webService.editTodo(id, task, completed);
 };
 
-export const removeTodo = async (id: string): Promise<void> => {
+export const deleteTodo = async (id: string): Promise<void> => {
     await webService.deleteTodo(id);
 };

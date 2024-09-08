@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { User } from '@/entity/user'
 import { Todo } from '@/entity/todo' // Import the types
 
 // Define the base URL for the backend API
@@ -46,7 +45,7 @@ export const loginUser = async (username: string, password: string): Promise<voi
 };
 
 // To-Do Operations
-export const getTodos = async (): Promise<Todo[]> => {
+export const loadTodos = async (): Promise<Todo[]> => {
     const response = await axiosInstance.get('/todos');
     return response.data;
 };
@@ -56,7 +55,7 @@ export const createTodo = async (task: string): Promise<Todo> => {
     return response.data;
 };
 
-export const updateTodo = async (id: string, task: string, completed: boolean): Promise<Todo> => {
+export const editTodo = async (id: string, task: string, completed: boolean): Promise<Todo> => {
     const response = await axiosInstance.put(`/todos/${id}`, { task, completed });
     return response.data;
 };

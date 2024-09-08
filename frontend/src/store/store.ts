@@ -1,7 +1,6 @@
 import { createStore } from 'vuex';
 import * as serviceUtil from '@/util/serviceUtil';
 import { Todo } from '@/entity/todo';
-import { registerUser } from '@/util/webServiceUtil';
 
 export default createStore({
     state: {
@@ -38,11 +37,11 @@ export default createStore({
           await serviceUtil.registerUser(username, password)
         },
         async loadTodos({ commit }) {
-            const todos = await serviceUtil.fetchTodos();
+            const todos = await serviceUtil.loadTodos();
             commit('setTodos', todos);
         },
         async createTodo({ commit }, task: string) {
-            const todo = await serviceUtil.addTodo(task);
+            const todo = await serviceUtil.createTodo(task);
             console.log(todo)
             if(todo !== undefined || null){
               commit('addTodo', todo);
@@ -50,13 +49,13 @@ export default createStore({
             console.log(this.state.todos)
         },
         async editTodo({ commit }, { id, task, completed }: { id: string; task: string; completed: boolean }) {
-            const updatedTodo = await serviceUtil.modifyTodo(id, task, completed);
+            const updatedTodo = await serviceUtil.editTodo(id, task, completed);
             console.log(updatedTodo)
             commit('updateTodo', updatedTodo);
         },
         async deleteTodo({ commit }, id: string) {
             console.log(this.state.todos, "before delete");
-            await serviceUtil.removeTodo(id);
+            await serviceUtil.deleteTodo(id);
             commit('removeTodo', id);
             console.log(this.state.todos, "after delete");
         },
