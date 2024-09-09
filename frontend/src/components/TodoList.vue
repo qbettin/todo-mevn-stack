@@ -64,7 +64,7 @@ export default defineComponent({
 
 <style scoped>
 .todo-list {
-  max-height: 65vh; /* Limit height */
+  max-height: 47vh; /* Limit height */
   overflow-y: auto; /* Make scrollable */
 }
 </style>

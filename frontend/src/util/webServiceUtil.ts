@@ -20,11 +20,18 @@ const axiosInstance = axios.create({
 // Request interceptor to add the auth token to headers
 axiosInstance.interceptors.request.use((config) => {
     const token = getAuthToken();
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    
+    // Skip adding the token for login and registration routes
+    if (config.url !== '/auth/login' && config.url !== '/auth/register' && token) {
+        console.log(token, "token");
+      config.headers.Authorization = `Bearer ${token}`;
     }
+  
     return config;
-});
+  }, (error) => {
+    return Promise.reject(error);
+  });
+  
 
 // User Authentication
 export const registerUser = async (username: string, password: string): Promise<{ message: string }> => {
@@ -33,16 +40,16 @@ export const registerUser = async (username: string, password: string): Promise<
 };
 
 export const loginUser = async (username: string, password: string): Promise<void> => {
-  try {
-      const response = await axiosInstance.post('/auth/login', { username, password });
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-      console.log('Login successful, token stored in local storage');
-  } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
-  }
-};
+    try {
+        const response = await axiosInstance.post(`${BASE_URL}/auth/login`, { username, password }); // Use axios instead of axiosInstance
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        console.log('Login successful, token stored in local storage');
+    } catch (error) {
+        console.error('Login failed:', error);
+        throw error;
+    }
+  };  
 
 // To-Do Operations
 export const loadTodos = async (): Promise<Todo[]> => {

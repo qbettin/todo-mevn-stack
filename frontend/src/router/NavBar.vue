@@ -10,8 +10,9 @@
 
         <!-- Right side: Login and Register buttons -->
         <v-col cols="auto" class="d-flex justify-end">
-          <v-btn v-show="isLoginOrRegisterPage" to="/" text>Login</v-btn>
-          <v-btn v-show="isLoginOrRegisterPage" to="/register" text>Register</v-btn>
+          <v-btn v-show="isLoginOrRegisterPage" to="/">Login</v-btn>
+          <v-btn v-show="isLoginOrRegisterPage" to="/register">Register</v-btn>
+          <v-btn v-show="!isLoginOrRegisterPage" to="/" @click="store.dispatch('logout')">Logout</v-btn>
           <v-btn @click="toggleTheme" icon>
             <v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
           </v-btn>
@@ -25,11 +26,13 @@
 import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTheme } from 'vuetify';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
     const theme = useTheme();
     const router = useRouter();
+    const store = useStore();
     const isLoginOrRegisterPage = computed(() => {
       const path = router.currentRoute.value.path;
       return path === '/' || path === '/register';
@@ -39,6 +42,8 @@ export default defineComponent({
       theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
     }
     return {
+      theme,
+      store,
       router,
       isLoginOrRegisterPage,
       toggleTheme,

@@ -4,12 +4,18 @@ import { Todo } from '@/entity/todo';
 
 export default createStore({
     state: {
-        currentUser: null as string | null,
+        currentUser: localStorage.getItem('currentUser') || null as string | null, // Load from localStorage if available
         todos: [] as Todo[],
     },
     mutations: {
         setUser(state, user: string) {
             state.currentUser = user;
+            // Persist the user to localStorage
+            localStorage.setItem('currentUser', user);
+        },
+        clearUser(state) {
+            state.currentUser = null;
+            localStorage.removeItem('currentUser');
         },
         setTodos(state, todos: Todo[]) {
             state.todos = todos;
@@ -29,12 +35,16 @@ export default createStore({
     },
     actions: {
         async login({ commit }, { username, password }) {
-          await serviceUtil.loginUser(username, password);
-          commit('setUser', username);
-          console.log(this.state.currentUser)
+            await serviceUtil.loginUser(username, password);
+            commit('setUser', username);
+            console.log(this.state.currentUser);
         },
-        async register({ commit }, {username, password }){
-          await serviceUtil.registerUser(username, password)
+        async register({ commit }, { username, password }) {
+            await serviceUtil.registerUser(username, password);
+        },
+        async logout({ commit }) {
+            // Clear the currentUser from both the store and localStorage
+            commit('clearUser');
         },
         async loadTodos({ commit }) {
             const todos = await serviceUtil.loadTodos();
@@ -42,22 +52,22 @@ export default createStore({
         },
         async createTodo({ commit }, task: string) {
             const todo = await serviceUtil.createTodo(task);
-            console.log(todo)
-            if(todo !== undefined || null){
-              commit('addTodo', todo);
+            console.log(todo);
+            if (todo !== undefined || null) {
+                commit('addTodo', todo);
             }
-            console.log(this.state.todos)
+            console.log(this.state.todos);
         },
         async editTodo({ commit }, { id, task, completed }: { id: string; task: string; completed: boolean }) {
             const updatedTodo = await serviceUtil.editTodo(id, task, completed);
-            console.log(updatedTodo)
+            console.log(updatedTodo);
             commit('updateTodo', updatedTodo);
         },
         async deleteTodo({ commit }, id: string) {
-            console.log(this.state.todos, "before delete");
+            console.log(this.state.todos, 'before delete');
             await serviceUtil.deleteTodo(id);
             commit('removeTodo', id);
-            console.log(this.state.todos, "after delete");
+            console.log(this.state.todos, 'after delete');
         },
     },
     getters: {
@@ -65,7 +75,8 @@ export default createStore({
             return state.todos;
         },
         getCurrentUser(state) {
-            return state.currentUser;
+            // Always return the current user from localStorage if available
+            return state.currentUser || localStorage.getItem('currentUser');
         },
     },
 });

@@ -20,6 +20,13 @@
                 type="password"
                 required
               ></v-text-field>
+              <v-text-field
+                v-model="confirmPassword"
+                label="Confirm Password"
+                :rules="[rules.required, rules.passwordMatch]"
+                type="password"
+                required
+              ></v-text-field>
               <v-btn
                 :disabled="!valid"
                 @click="register"
@@ -47,23 +54,27 @@ export default defineComponent({
     const store = useStore();
     const username = ref('');
     const password = ref('');
+    const confirmPassword = ref('');
     const valid = ref(false);
 
     const rules = {
       required: (value: string) => !!value || 'Required.',
       min: (value: string) => value.length >= 6 || 'Password must be at least 6 characters long.',
+      passwordMatch: () => password.value === confirmPassword.value || 'Passwords do not match.',
     };
 
     const register = async () => {
-      try {
-        await store.dispatch('register', { username: username.value, password: password.value });
-        router.push('/');
-      } catch (error) {
-        console.error('Registration failed:', error);
+      if (password.value === confirmPassword.value) {
+        try {
+          await store.dispatch('register', { username: username.value, password: password.value });
+          router.push('/');
+        } catch (error) {
+          console.error('Registration failed:', error);
+        }
       }
     };
 
-    return { username, password, valid, rules, register };
+    return { username, password, confirmPassword, valid, rules, register };
   }
 });
 </script>
