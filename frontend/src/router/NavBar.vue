@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app>
     <v-container>
-      <v-row align="center" justify="space-between">
+      <v-row justify="space-between">
         <!-- Left side: Task Manager title with icon -->
         <v-col cols="auto" class="d-flex align-center">
           <v-icon color="black">mdi-calendar-check</v-icon> <!-- Replace mdi-task with the desired icon -->
@@ -9,7 +9,7 @@
         </v-col>
 
         <!-- Right side: Login and Register buttons -->
-        <v-col cols="auto" class="d-flex justify-end">
+        <v-col cols="auto" class="d-flex justify-end align-center">
           <v-btn v-show="isLoginOrRegisterPage" to="/">Login</v-btn>
           <v-btn v-show="isLoginOrRegisterPage" to="/register">Register</v-btn>
           <v-btn v-show="!isLoginOrRegisterPage" to="/" @click="store.dispatch('logout')">Logout</v-btn>

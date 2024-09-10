@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title>
-        <span class="headline">Your To-Do List</span>
+        <span class="headline">{{ store.getters.getCurrentUser }}'s To-Do List</span>
       </v-card-title>
       <v-card-subtitle>Manage your tasks here.</v-card-subtitle>
       <v-card-text class="todo-list">
@@ -57,7 +57,7 @@ export default defineComponent({
       }
     };
 
-    return { todos, toggleComplete, deleteTodo };
+    return { todos, store, toggleComplete, deleteTodo };
   }
 });
 </script>

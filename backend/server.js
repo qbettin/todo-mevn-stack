@@ -7,7 +7,7 @@ const todoRoutes = require('./routes/todos.js');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://qbettin:yolostealthis@secsofttodo.yxx5w.mongodb.net/?retryWrites=true&w=majority&appName=secsoftTODO";
+const MONGO_URI = process.env.MONGO_URI
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors());

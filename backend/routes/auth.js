@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../entity/user');
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "12ebd4da88786f83a58bb5b8c5e2269283eff477059f225d6808e6b98b8ae826f95395076808974da2d266c7374fce6d5f1047d89c611d73e2dd2ac06bcb1ca5";
-// User Registration
+const JWT_SECRET = process.env.JWT_SECRET;
+
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -22,9 +22,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// User Login
 router.post('/login', async (req, res) => {
-  console.log(process.env.JWT_SECRET, "JWT")
     const { username, password } = req.body;
     try {
       const user = await User.findOne({ username });
