@@ -11,6 +11,11 @@ const MONGO_URI = process.env.MONGO_URI
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors());
+// TODO change this to frontend url when deployed
+// app.use(cors({
+//     origin: 'https://your-frontend.vercel.app',  // Replace with your frontend URL
+//     credentials: true
+//   }));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);  // Auth routes

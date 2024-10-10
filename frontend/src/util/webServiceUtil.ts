@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Todo } from '@/entity/todo' // Import the types
 
 // Define the base URL for the backend API
+//TODO change this to backends deployed url
 const BASE_URL = 'http://localhost:5000/api'; // Adjust this based on your backend's deployed URL
 
 // Utility function to get the authentication token
