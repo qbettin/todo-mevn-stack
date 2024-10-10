@@ -10,7 +10,10 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors());
+app.use(cors({
+    origin: '*',  // Allow all origins for testing
+    credentials: true
+}));
 // TODO change this to frontend url when deployed
 // app.use(cors({
 //     origin: 'https://your-frontend.vercel.app',  // Replace with your frontend URL
