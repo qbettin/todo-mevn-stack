@@ -4,7 +4,7 @@
       <v-row justify="space-between">
         <!-- Left side: Task Manager title with icon -->
         <v-col cols="auto" class="d-flex align-center">
-          <v-icon color="black">mdi-calendar-check</v-icon> <!-- Replace mdi-task with the desired icon -->
+          <v-icon>mdi-calendar-check</v-icon> <!-- Replace mdi-task with the desired icon -->
           <v-toolbar-title>Task Manager</v-toolbar-title>
         </v-col>
 

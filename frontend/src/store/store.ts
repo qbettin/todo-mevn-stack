@@ -4,7 +4,7 @@ import { Todo } from '@/entity/todo';
 
 export default createStore({
     state: {
-        currentUser: localStorage.getItem('currentUser') || null as string | null, // Load from localStorage if available
+        currentUser: localStorage.getItem('currentUser') || null as string | null,
         todos: [] as Todo[],
     },
     mutations: {

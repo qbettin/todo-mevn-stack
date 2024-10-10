@@ -13,7 +13,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 app.use(cors());
 app.use(express.json());
 
-// Use routes
 app.use('/api/auth', authRoutes);  // Auth routes
 app.use('/api/todos', todoRoutes); // Todos routes
 
@@ -22,7 +21,6 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-// Connect to MongoDB
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -31,7 +29,6 @@ mongoose.connect(MONGO_URI, {
     .catch((err) => console.error('MongoDB connection error:', err));
 mongoose.set('debug', true);
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
